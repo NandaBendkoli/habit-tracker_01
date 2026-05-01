@@ -1,13 +1,16 @@
 import express from "express";
 import dotenv from "dotenv";
-import color from "color";
-
+import chalk from "chalk";
+import { ConnectToDb } from "./Config/database.js";
 dotenv.config();
-const PORT = process.env.PORT || 4000;
+
+const Port = process.env.PORT || 4000;
 
 const app = express();
 
-app.listen(PORT, () => {
-    console.log(`Server is running on port ${PORT}, http://localhost:8000/`)
-})
+// connection with db
+ConnectToDb();
 
+app.listen(Port, () => {
+    console.log(chalk.yellowBright(`Server is Running on port ${Port},http://localhost:8000/`));
+});
