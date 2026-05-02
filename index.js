@@ -9,11 +9,13 @@ const Port = process.env.PORT || 4000;
 
 const app = express();
 
+// json body
+app.use(express.json());
 // connection with db
 ConnectToDb();
 
 //routes
-app.use("/habit-tracker/web/v1",routes);
+app.use("/habit-tracker/web/v1", routes);
 
 app.listen(Port, () => {
     console.log(chalk.yellowBright(`Server is Running on port ${Port},http://localhost:8000/`));

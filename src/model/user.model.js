@@ -20,17 +20,23 @@ const userSchema = new mongoose.Schema({
 
     },
     password: {
-        type: String
+        type: String,
+        required : true
 
     },
     gender: {
-        type: String
+        type: String,
+        required : true
 
     },
+    isDeleted: {
+        type: Boolean,
+        default: false
+    }
 }, {
     timestamps: true
 })
 
-const UserModel = mongoose.Model("User", userSchema);
+const UserModel = mongoose.model("User", userSchema);
 
 export default UserModel;

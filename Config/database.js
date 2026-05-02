@@ -8,7 +8,7 @@ dotenv.config();
 export const ConnectToDb = async () => {
     try {
         const mongodbUrl = process.env.MONGOURI;
-        console.log(mongodbUrl);
+        // console.log(mongodbUrl);
         const connection = mongoose.connect(mongodbUrl);
 
         if (connection) {
