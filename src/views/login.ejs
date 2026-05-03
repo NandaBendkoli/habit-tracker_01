@@ -2,34 +2,62 @@
 
 <div class="hero-section d-flex align-items-center justify-content-center">
 
-    <div class="login-card bg-light p-4 rounded shadow">
-        <h3 class="text-center mb-3">Login</h3>
+  <div class="login-card bg-light p-4 rounded shadow">
 
-        <form action="user/loginUser" method="POST">
+    <h3 class="text-center mb-3">🔐 Login</h3>
 
-            <div class="mb-3">
-                <input type="email" name="email" class="form-control" placeholder="Email" required>
-            </div>
+    <!-- ❌ Error Message -->
+    <% if (typeof error !== "undefined") { %>
+      <div class="alert alert-danger py-2">
+        <%= error %>
+      </div>
+    <% } %>
 
-            <div class="mb-3">
-                <input type="password" name="password" class="form-control" placeholder="Password" required>
-            </div>
+    <form action="/user/loginUser" method="POST">
 
-            <button class="btn btn-dark w-100">Login</button>
+      <div class="mb-3">
+        <input 
+          type="email" 
+          name="email" 
+          class="form-control" 
+          placeholder="Email" 
+          required
+          value="<%= typeof email !== 'undefined' ? email : '' %>"
+        >
+      </div>
 
-            <p class="text-center mt-3">
-                Don’t have an account?
-                <a href="/signup">Sign Up</a>
-            </p>
-        </form>
-    </div>
+      <div class="mb-3">
+        <input 
+          type="password" 
+          name="password" 
+          class="form-control" 
+          placeholder="Password" 
+          required
+        >
+      </div>
+
+      <button class="btn btn-dark w-100">Login</button>
+
+      <p class="text-center mt-3">
+        Don’t have an account?
+        <a href="/signup">Sign Up</a>
+      </p>
+
+    </form>
+
+  </div>
 
 </div>
 
-<style>
+<style id="login-style-1">
+.hero-section {
+  height: 90vh;
+ 
+}
+
 .login-card {
-    width: 350px;
-    position: relative;
-    z-index: 2;
+  width: 350px;
+  position: relative;
+  z-index: 2;
 }
 </style>

@@ -67,39 +67,62 @@ export const createUser = async (req, res) => {
 
 }
 export const loginUser = async (req, res) => {
+  try {
     const { email, password } = req.body;
-    const user = await UserModel.findOne({ isDeleted: false, email });
+
+    // check email
+    const user = await UserModel.findOne({
+      isDeleted: false,
+      email
+    });
+
     if (!user) {
-        return res.status(400).json({
-            success: false,
-            message: "Email is not in database please register"
-        })
+      return res.status(400).render("login", {
+        error: "❌ Email is not registered. Please signup first.",
+        email
+      });
     }
 
-    // password matched
-    const matchedPassword = await bcrypt.compare(password, user.password)
-    const token = jwt.sign(
-        {
-            userId: user.userId,
-            email: user.email,
-            gender: user.gender
-        },
-        process.env.secreteKey,
-        { "expiresIn": "1d" }
-    );
-    return res
-        .cookie("token", token, {
-            httpOnly: true
-        })
-        .redirect("/habit/dashboard");
+    // check password
+    const matchedPassword = await bcrypt.compare(password, user.password);
 
-}
+    if (!matchedPassword) {
+      return res.status(400).render("login", {
+        error: "❌ Invalid password",
+        email
+      });
+    }
+
+    // create token
+    const token = jwt.sign(
+      {
+        userId: user.userId,
+        email: user.email
+      },
+      process.env.secreteKey,
+      { expiresIn: "1d" }
+    );
+
+    // set cookie and redirect
+    return res
+      .cookie("token", token, { httpOnly: true })
+      .redirect("/habit/dashboard");
+
+  } catch (error) {
+    console.log(error);
+    res.render("login", {
+      error: "Something went wrong. Try again."
+    });
+  }
+};
 export const getProfile = async (req, res) => {
     try {
-        const userId = req.user.userId;
+        if (!req.user) {
+            return res.render("profile", { user: null });
+        }
 
         const user = await UserModel.findOne({
-            userId,
+            userId: req.user.userId,
             isDeleted: false
         });
 

@@ -1,5 +1,3 @@
-<link rel="stylesheet" href="/css/home.css" />
-
 <div class="hero-section d-flex align-items-center justify-content-center">
   <div class="text-center text-white">
     <h1 class="fw-bold mb-3">Build Better Habits 🚀</h1>
@@ -11,3 +9,28 @@
     <a href="/signup" class="btn btn-lg btn-warning px-4"> Get Started </a>
   </div>
 </div>
+
+<style>
+  .hero-section {
+  height: 90vh;
+  background: url("../images/bg.png") no-repeat center center/cover;
+  position: relative;
+}
+
+/* dark overlay for better text visibility */
+.hero-section::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0, 0, 0, 0.5);
+}
+
+.hero-section > div {
+  position: relative;
+  z-index: 2;
+}
+
+</style>

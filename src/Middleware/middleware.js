@@ -48,7 +48,7 @@ export const verifyToken = (req, res, next) => {
     const token = req.cookies?.token;
 
     if (!token) {
-      return res.redirect("/login"); // better for EJS
+      return res.redirect("/login"); 
     }
 
     const decoded = jwt.verify(token, process.env.secreteKey);

@@ -1,38 +1,121 @@
 <link rel="stylesheet" href="/css/profile.css">
 
-<h2>👤 My Profile</h2>
+<div class="profile-container">
 
-<div class="profile-card">
-  <p><strong>Name:</strong> <%= user.name %></p>
+  <h2>👤 My Profile</h2>
 
-  <p><strong>Email:</strong> <%= user.email %></p>
+  <% if (!user) { %>
 
-  <p><strong>Mobile:</strong> <%= user.mobile %></p>
+    <div class="profile-card">
+      <p>Please login first 🔐</p>
+      <a href="/login" class="back-btn">Go to Login</a>
+    </div>
 
-  <p><strong>Gender:</strong> <%= user.gender %></p>
+  <% } else { %>
 
-  <p><strong>Joined:</strong> 
-    <%= new Date(user.createdAt).toDateString() %>
-  </p>
+    <div class="profile-card">
+
+      <div class="profile-header">
+        <div class="avatar">👤</div>
+        <h3><%= user.name %></h3>
+        <p class="email"><%= user.email %></p>
+      </div>
+
+      <div class="profile-details">
+
+        <div class="detail">
+          <span>📱 Mobile</span>
+          <strong><%= user.mobile %></strong>
+        </div>
+
+        <div class="detail">
+          <span>⚧ Gender</span>
+          <strong><%= user.gender %></strong>
+        </div>
+
+        <div class="detail">
+          <span>📅 Joined</span>
+          <strong><%= new Date(user.createdAt).toDateString() %></strong>
+        </div>
+
+      </div>
+
+    </div>
+
+    <a href="/habit/dashboard" class="back-btn">⬅ Back to Dashboard</a>
+
+  <% } %>
 
 </div>
-
-<br/>
-
-<a href="/habit/dashboard">
-  <button>⬅ Back to Dashboard</button>
-</a>
-
 <style>
-.profile-card {
-  border: 1px solid #ccc;
-  padding: 20px;
-  width: 300px;
-  border-radius: 10px;
-  background: #f9f9f9;
+  body {
+  background: #f5f7fb;
+  font-family: 'Segoe UI', sans-serif;
 }
 
-.profile-card p {
-  margin: 10px 0;
+/* Container */
+.profile-container {
+  max-width: 500px;
+  margin: 40px auto;
+}
+
+/* Card */
+.profile-card {
+  background: white;
+  padding: 25px;
+  border-radius: 14px;
+  box-shadow: 0 6px 20px rgba(0,0,0,0.08);
+  text-align: center;
+}
+
+/* Header */
+.profile-header {
+  margin-bottom: 20px;
+}
+
+.avatar {
+  font-size: 40px;
+  margin-bottom: 10px;
+}
+
+.profile-header h3 {
+  margin: 5px 0;
+}
+
+.email {
+  color: #666;
+  font-size: 14px;
+}
+
+/* Details */
+.profile-details {
+  margin-top: 20px;
+  text-align: left;
+}
+
+.detail {
+  display: flex;
+  justify-content: space-between;
+  padding: 10px 0;
+  border-bottom: 1px solid #eee;
+}
+
+.detail span {
+  color: #666;
+}
+
+/* Back button */
+.back-btn {
+  display: inline-block;
+  margin-top: 20px;
+  padding: 10px 15px;
+  background: #4f46e5;
+  color: white;
+  border-radius: 8px;
+  text-decoration: none;
+}
+
+.back-btn:hover {
+  background: #4338ca;
 }
 </style>
