@@ -1,0 +1,38 @@
+<link rel="stylesheet" href="/css/profile.css">
+
+<h2>👤 My Profile</h2>
+
+<div class="profile-card">
+  <p><strong>Name:</strong> <%= user.name %></p>
+
+  <p><strong>Email:</strong> <%= user.email %></p>
+
+  <p><strong>Mobile:</strong> <%= user.mobile %></p>
+
+  <p><strong>Gender:</strong> <%= user.gender %></p>
+
+  <p><strong>Joined:</strong> 
+    <%= new Date(user.createdAt).toDateString() %>
+  </p>
+
+</div>
+
+<br/>
+
+<a href="/habit/dashboard">
+  <button>⬅ Back to Dashboard</button>
+</a>
+
+<style>
+.profile-card {
+  border: 1px solid #ccc;
+  padding: 20px;
+  width: 300px;
+  border-radius: 10px;
+  background: #f9f9f9;
+}
+
+.profile-card p {
+  margin: 10px 0;
+}
+</style>

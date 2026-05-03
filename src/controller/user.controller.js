@@ -2,6 +2,7 @@ import chalk from "chalk";
 import UserModel from "../model/user.model.js";
 import bcrypt from "bcrypt";
 import jwt from "jsonwebtoken";
+import { getNextSequence } from "../utils/index.js";
 export const createUser = async (req, res) => {
     try {
         const { name, email, mobile, password, gender } = req.body;
@@ -12,7 +13,7 @@ export const createUser = async (req, res) => {
                 message: "All Fields are Required!"
             })
         }
-        const userId = `USER_${mobile}`;
+        const userId = "USER" + await getNextSequence("users_seq", 100000);
 
         const isFoundEmail = await UserModel.findOne({
             isDeleted: false,
@@ -47,14 +48,14 @@ export const createUser = async (req, res) => {
         // save into databse
         await UserModel.create(result);
 
-        if (result) {
-            return res.status(200).json({
-                success: true,
-                message: "User Created Successfully!",
-                result
-            })
-        }
-
+        // if (result) {
+        //     return res.status(200).json({
+        //         success: true,
+        //         message: "User Created Successfully!",
+        //         result
+        //     })
+        // }
+        return res.redirect("/login");
     } catch (error) {
         console.log(chalk.redBright(error));
         return res.status(400).json({
@@ -86,11 +87,26 @@ export const loginUser = async (req, res) => {
         process.env.secreteKey,
         { "expiresIn": "1d" }
     );
-
-    return res.status(200).json({
-        success: true,
-        message: "Log in successfully!",
-        token
-    })
+    return res
+        .cookie("token", token, {
+            httpOnly: true
+        })
+        .redirect("/habit/dashboard");
 
 }
+export const getProfile = async (req, res) => {
+    try {
+        const userId = req.user.userId;
+
+        const user = await UserModel.findOne({
+            userId,
+            isDeleted: false
+        });
+
+        res.render("profile", { user });
+
+    } catch (error) {
+        console.log(error);
+        res.send("Error loading profile");
+    }
+};
